@@ -42,6 +42,9 @@ totalWorkingDays=0
 totalWage=0
 workDonePerDay=0
 
+declare -a perDayHoursDone
+declare -a dayWiseWageStorage
+
 getWorkDonePerDay() {
         case $1 in
                 0) workDonePerDay=$PART_TIME;;
@@ -58,8 +61,14 @@ do
         tempWage=$((workDonePerDay*EMPLOYEE_RATE_PER_HOUR));
         totalWage=$((tempWage+totalWage));
 
+        perDayHoursDone[((totalWorkingDays))]=$workDonePerDay
+        dayWiseWageStorage[((totalWorkingDays))]=$tempWage
+
+
 done
 
 echo "total working hours - " $totalWage
 echo "total days worked - " $totalWorkingDays
 echo "total hours done - " $total_working_hours
+echo "Hours per day : " ${perDayHoursDone[@]}
+echo "wages per day : " ${dayWiseWageStorage[@]}
